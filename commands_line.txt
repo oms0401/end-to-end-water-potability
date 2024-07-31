@@ -1,0 +1,9 @@
+dvc stage add -n data_collection -d src/data/data_collection.py -o data/raw python src/data/data_collection.py
+dvc repro
+dvc stage add -n pre_processing -d src/data/data_prep.py -d data/raw -o data/processed python src/data/data_prep.py
+dvc repro
+dvc stage add -n model_building -d src/model/model_building.py -d data/processed -o models/model.pkl python src/model/model_building.py
+dvc repro
+dvc stage add -n model_eval -d src/model/model_eval.py -d models/model.pkl --metrics reports/metrics.json python src/model/model_eval.py
+dvc repro
+dvc dag

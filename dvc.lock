@@ -1,0 +1,84 @@
+schema: '2.0'
+stages:
+  data_collection:
+    cmd: python src/data/data_collection.py
+    deps:
+    - path: src/data/data_collection.py
+      hash: md5
+      md5: f786e28acb293bbb6b62e649a1d4cb0b
+      size: 1995
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: c0c2d65c14a603e91e029fda3c344a5c.dir
+      size: 522262
+      nfiles: 2
+  pre_preprocessing:
+    cmd: python src/data/data_prep.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: c0c2d65c14a603e91e029fda3c344a5c.dir
+      size: 522262
+      nfiles: 2
+    - path: src/data/data_prep.py
+      hash: md5
+      md5: 391bcf3db5f4ad39173b2a1db1b7259e
+      size: 1888
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 50cb8001cd56bb2743fd3102227ab870.dir
+      size: 546137
+      nfiles: 2
+  model_building:
+    cmd: python src/model/model_building.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 50cb8001cd56bb2743fd3102227ab870.dir
+      size: 546137
+      nfiles: 2
+    - path: src/model/model_building.py
+      hash: md5
+      md5: 526fc51a909c41be731079ee46716137
+      size: 2032
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: f9568a3b47a0f60d9cc5be0a2472893f
+      size: 66311176
+  model_eval:
+    cmd: python src/model/model_eval.py
+    deps:
+    - path: models/model.pkl
+      hash: md5
+      md5: f9568a3b47a0f60d9cc5be0a2472893f
+      size: 66311176
+    - path: src/model/model_eval.py
+      hash: md5
+      md5: 396968ff12ae547c9c9c64e8a9831cef
+      size: 2475
+    outs:
+    - path: reports/metrics.json
+      hash: md5
+      md5: 948c99d493f163c270666502be933dba
+      size: 146
+  pre_processing:
+    cmd: python src/data/data_prep.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: c0c2d65c14a603e91e029fda3c344a5c.dir
+      size: 522262
+      nfiles: 2
+    - path: src/data/data_prep.py
+      hash: md5
+      md5: 391bcf3db5f4ad39173b2a1db1b7259e
+      size: 1888
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 50cb8001cd56bb2743fd3102227ab870.dir
+      size: 546137
+      nfiles: 2
